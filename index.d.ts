@@ -176,6 +176,7 @@ declare class Parameter {
 
 declare interface ValidateOptions {
   readonly includeErrors?: string[]
+  readonly isResponse?: boolean
 }
 
 type Operation = {
