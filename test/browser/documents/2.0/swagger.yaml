@@ -830,6 +830,7 @@ definitions:
     required:
       - "name"
       - "photoUrls"
+      - "requiredSecret"
     properties:
       id:
         type: "integer"
@@ -866,6 +867,9 @@ definitions:
       nonSecret:
         type: "string"
         x-ms-secret: false
+      requiredSecret:
+        type: "string"
+        x-ms-secret: true
       writeOnly:
         type: "string"
         x-ms-mutability: ["create", "update"]

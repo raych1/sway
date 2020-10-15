@@ -165,6 +165,11 @@ describe('Response', function () {
       nonSecret: 'notAnySecret'
     }
 
+    var requiredSecretPet = {
+      name: 'Test Pet',
+      photoUrls: []
+    }
+
     describe('validate Content-Type', function () {
       describe('operation level produces', function () {
         var cSway;
@@ -740,6 +745,28 @@ describe('Response', function () {
                   path: []
                 }
               ]);
+              assert.equal(results.warnings.length, 0);
+            })
+            .then(done, done);
+        });
+
+        it('Test if response has secret property marked with x-ms-secret that equals to TRUE and also it is required property', function (done) {
+          var cSwaggerDoc = _.cloneDeep(helpers.swaggerDoc);
+
+          Sway.create({
+            definition: cSwaggerDoc
+          })
+            .then(function (api) {
+              var results = api.getOperation('/pet/{petId}', 'get').validateResponse({
+                body: requiredSecretPet,
+                encoding: 'utf-8',
+                headers: {
+                  'content-type': 'application/json'
+                },
+                statusCode: 200
+              });
+
+              assert.equal(results.errors.length, 0);
               assert.equal(results.warnings.length, 0);
             })
             .then(done, done);
